@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>С Днём Рождения!</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#ffc2dd,#ffd8e8,#e3d1ff);
+}
+
+/* Цветы */
+
+#flowers{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+}
+
+.flower{
+    position:absolute;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px) rotate(0deg);
+    }
+    to{
+        transform:translateY(110vh) rotate(360deg);
+    }
+}
+
+/* Конверт */
+
+.envelope{
+    position:relative;
+    width:500px;
+    height:320px;
+}
+
+.base{
+    width:100%;
+    height:100%;
+    background:#ff4f87;
+    border-radius:20px;
+    position:absolute;
+    z-index:2;
+}
+
+.flap{
+    position:absolute;
+    width:100%;
+    height:180px;
+    background:#ff77ab;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top;
+    transition:1.2s;
+    z-index:4;
+}
+
+.open-btn{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    z-index:10;
+
+    border:none;
+    background:white;
+    color:#ff4f87;
+
+    font-size:24px;
+    font-weight:bold;
+
+    padding:18px 35px;
+    border-radius:50px;
+    cursor:pointer;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.hide{
+    opacity:0;
+    transform:scale(.5);
+    transition:1s;
+}
+
+/* Поздравление */
+
+.greeting{
+    position:absolute;
+    width:90%;
+    max-width:800px;
+    text-align:center;
+
+    opacity:0;
+    transform:scale(.8);
+
+    transition:1.5s;
+}
+
+.greeting.show{
+    opacity:1;
+    transform:scale(1);
+}
+
+.greeting h1{
+    color:#ff4f87;
+    font-size:64px;
+    margin-bottom:15px;
+}
+
+.age{
+    font-size:120px;
+    color:#ff78aa;
+    font-weight:bold;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.08);
+    }
+}
+
+.text{
+    margin-top:20px;
+    font-size:28px;
+    line-height:1.8;
+    color:#555;
+}
+
+/* Сердечки */
+
+.heart{
+    position:absolute;
+    font-size:35px;
+    opacity:0;
+}
+
+.show .heart{
+    animation:heartFly 5s linear infinite;
+}
+
+@keyframes heartFly{
+
+    0%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    100%{
+        opacity:0;
+        transform:translateY(-800px) scale(2);
+    }
+}
+
+/* Мобильная версия */
+
+@media(max-width:768px){
+
+    .envelope{
+        width:90vw;
+        height:220px;
+    }
+
+    .flap{
+        height:120px;
+    }
+
+    .open-btn{
+        font-size:18px;
+        padding:14px 24px;
+    }
+
+    .greeting h1{
+        font-size:36px;
+    }
+
+    .age{
+        font-size:80px;
+    }
+
+    .text{
+        font-size:18px;
+        line-height:1.6;
+    }
+
+    .heart{
+        font-size:25px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="flowers"></div>
+
+<div class="envelope" id="envelope">
+
+    <button class="open-btn" onclick="openCard()">
+        Открыть 💌
+    </button>
+
+    <div class="flap" id="flap"></div>
+    <div class="base"></div>
+
+</div>
+
+<div class="greeting" id="greeting">
+
+    <div class="heart" style="left:15%;top:75%">💖</div>
+    <div class="heart" style="left:50%;top:85%;animation-delay:1s">💕</div>
+    <div class="heart" style="left:80%;top:75%;animation-delay:2s">💗</div>
+
+    <h1>🎉 С Днём Рождения! 🎉</h1>
+
+    <div class="age">14</div>
+
+    <div class="text">
+
+        🌸 Дорогая сестра Вероника! 🌸
+
+        <br><br>
+
+        Поздравляю тебя с 14-летием! 💖✨
+
+        <br><br>
+
+        Пусть каждый день будет наполнен счастьем,
+        улыбками, радостью и яркими моментами!
+
+        🌷🌷🌷
+
+        <br><br>
+
+        Желаю крепкого здоровья,
+        верных друзей, успехов в учёбе
+        и исполнения самых заветных желаний!
+
+        💕🌹✨
+
+        <br><br>
+
+        🎂 С Праздником! 🎂
+
+    </div>
+
+</div>
+
+<script>
+
+function openCard(){
+
+    const flap = document.getElementById("flap");
+    const envelope = document.getElementById("envelope");
+    const greeting = document.getElementById("greeting");
+
+    flap.style.transform = "rotateX(180deg)";
+
+    setTimeout(() => {
+
+        envelope.classList.add("hide");
+
+        setTimeout(() => {
+
+            envelope.style.display = "none";
+            greeting.classList.add("show");
+
+        },1000);
+
+    },800);
+}
+
+/* Цветы */
+
+const flowers = document.getElementById("flowers");
+
+const emojis = ["🌸","🌷","🌹","🌺"];
+
+for(let i=0;i<35;i++){
+
+    const flower = document.createElement("div");
+
+    flower.className = "flower";
+    flower.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+
+    flower.style.left = Math.random()*100+"%";
+    flower.style.fontSize = (20+Math.random()*20)+"px";
+    flower.style.animationDuration = (8+Math.random()*10)+"s";
+
+    flowers.appendChild(flower);
+}
+
+</script>
+
+</body>
+</html>
+
